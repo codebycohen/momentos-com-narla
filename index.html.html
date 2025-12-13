@@ -1,0 +1,305 @@
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Portfólio de Fotos</title>
+    <style>
+        /* RESET BÁSICO */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }body {
+        min-height: 100vh;
+        font-family: Arial, Helvetica, sans-serif;
+        background: radial-gradient(circle at bottom, #0b1026, #000);
+        color: #fff;
+        overflow-x: hidden;
+    }
+
+    /* FUNDO DE ESTRELAS */
+    body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+          radial-gradient(1.5px 1.5px at 100px 80px, #fff, transparent),
+          radial-gradient(1px 1px at 200px 150px, #fff, transparent),
+          radial-gradient(2px 2px at 300px 50px, #fff, transparent),
+          radial-gradient(1px 1px at 400px 200px, #fff, transparent);
+        background-size: 500px 500px;
+        opacity: 0.9;
+        z-index: -1;
+    }
+
+    header {
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+    header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+    }
+
+    header p {
+        opacity: 0.8;
+    }
+
+    /* GALERIA */
+    .galeria {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 40px;
+        padding: 40px;
+    }
+
+    .foto-card {
+    background: #0e8494;
+    border-radius: 8px;
+    padding: 12px 12px 20px 12px;
+    text-align: center;
+    animation: flutuar 4s ease-in-out infinite;
+    width: 180px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.foto-card:hover {
+    transform: scale(1.08) rotate(0deg);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    z-index: 2;
+}
+
+    .foto-card:nth-child(even) {
+    animation-delay: 2s;
+    transform: rotate(2deg);
+}
+
+.foto-card:nth-child(odd) {
+    transform: rotate(-2deg);
+}
+
+    .foto-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 4px;
+    }
+
+    .foto-card p {
+        margin-top: 12px;
+        font-size: 0.85rem;
+        color: #111;
+    }
+
+    /* ANIMAÇÃO DE FLUTUAÇÃO */
+    @keyframes flutuar {
+        0% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0); }
+    }
+
+    footer {
+        text-align: center;
+        padding: 20px;
+        font-size: 0.8rem;
+        opacity: 0.6;
+    }
+/* MODAL (foto ampliada) */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 16px 16px 24px;
+    border-radius: 10px;
+    max-width: 90%;
+    max-height: 90%;
+    text-align: center;
+    animation: zoom 0.3s ease;
+}
+
+.modal-content img {
+    width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+    border-radius: 6px;
+}
+
+.modal-content p {
+    margin-top: 12px;
+    color: #111;
+    font-size: 0.9rem;
+}
+
+@keyframes zoom {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes estrelas {
+  from { transform: translateY(0); }
+  to { transform: translateY(500px); }
+}
+
+body::before {
+  animation: estrelas 90s linear infinite;
+}
+
+</style>
+</head>
+<body><header>
+    <h1>✨Todo dia uma foto com ela✨</h1>
+    <p>Momentos capturados em fotos ✨</p>
+</header>
+<section class="galeria">
+    <!-- FOTO 1 -->
+    <div class="foto-card">
+        <img src="fotos/foto1.jpg" alt="Foto 1">
+        <p>Meu cabelo tava horrivel</p>
+        <p>12/12/2025</p>
+        <span class="like">❤️</span>
+    </div>
+
+    <!-- FOTO 2 -->
+    <div class="foto-card">
+        <img src="fotos/foto2.jpg" alt="Foto 2">
+        <p>Mensagem personalizada da foto 2</p>
+        <p>11/12/2025</p>
+        <span class="like">❤️</span>
+    </div>
+
+    <!-- FOTO 3 -->
+    <div class="foto-card">
+        <img src="fotos/foto3.jpg" alt="Foto 3">
+        <p>Mensagem personalizada da foto 3</p>
+        <p>10/12/2025</p>
+        <span class="like">❤️</span>
+    </div>
+</section>
+
+<!-- BOTÃO DE CURTIR --><style>
+.like {
+  font-size: 1.2rem;
+  cursor: pointer;
+  user-select: none;
+}
+.like.active { color: red; }
+</style><footer>
+    © 2025 - Cohen
+</footer>
+
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <img id="modal-img">
+    <p id="modal-text"></p>
+  </div>
+</div>
+
+<script>
+  // CURTIR
+  document.querySelectorAll('.like').forEach(like => {
+    like.addEventListener('click', e => {
+      e.stopPropagation();
+      like.classList.toggle('active');
+    });
+  });
+
+  // MODAL (já existente)
+  const cards = document.querySelectorAll('.foto-card');
+  const modal = document.getElementById('modal');
+  const modalImg = document.getElementById('modal-img');
+  const modalText = document.getElementById('modal-text');
+
+  cards.forEach(card => {
+    card.addEventListener('click', () => {
+      modal.classList.add('active');
+      modalImg.src = card.querySelector('img').src;
+      modalText.innerHTML = card.innerHTML.replace(/<img[^>]*>/, '');
+    });
+  });
+
+  modal.addEventListener('click', () => {
+    modal.classList.remove('active');
+  });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  const cards = document.querySelectorAll('.foto-card');
+  const modal = document.getElementById('modal');
+  const modalImg = document.getElementById('modal-img');
+  const modalText = document.getElementById('modal-text');
+
+  let fotos = [];
+  let indexAtual = 0;
+  let startX = 0;
+
+  cards.forEach((card, index) => {
+    fotos.push(card);
+
+    // Abrir modal
+    card.addEventListener('click', () => {
+      indexAtual = index;
+      abrirFoto();
+    });
+
+    // Curtir
+    const like = card.querySelector('.like');
+    like.addEventListener('click', e => {
+      e.stopPropagation();
+      like.classList.toggle('active');
+    });
+  });
+
+  function abrirFoto() {
+    modal.classList.add('active');
+    const card = fotos[indexAtual];
+    modalImg.src = card.querySelector('img').src;
+    modalText.innerHTML = card.innerHTML.replace(/<img[^>]*>/, '');
+  }
+
+  modal.addEventListener('click', () => {
+    modal.classList.remove('active');
+  });
+
+  // SWIPE
+  modal.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+  });
+
+  modal.addEventListener('touchend', e => {
+    const endX = e.changedTouches[0].clientX;
+    const diff = startX - endX;
+
+    if (diff > 50) {
+      // Próxima
+      indexAtual = (indexAtual + 1) % fotos.length;
+      abrirFoto();
+    } else if (diff < -50) {
+      // Anterior
+      indexAtual = (indexAtual - 1 + fotos.length) % fotos.length;
+      abrirFoto();
+    }
+  });
+
+});
+</script>
+
+</body>
+</html>
