@@ -124,7 +124,7 @@
 }
 
 .modal-content {
-    background: #fff;
+    background: #0e8494;
     padding: 16px 16px 24px;
     border-radius: 10px;
     max-width: 90%;
@@ -156,11 +156,47 @@
   to { transform: translateY(500px); }
 }
 
+/* velocidade das estrelas atras*/
 body::before {
-  animation: estrelas 90s linear infinite;
+  animation: estrelas 15s linear infinite;
+}
+
+
+/*ajueste pras telas de celuar e bla bla bla*/
+
+@media (max-width: 600px) {
+
+  header h1 {
+    font-size: 1.8rem;
+  }
+
+  .galeria {
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .foto-card {
+    width: 90%;
+    max-width: 320px;
+    transform: rotate(0deg);
+  }
+
+  .foto-card img {
+    height: 240px;
+  }
+
+  .foto-card:hover {
+    transform: scale(1.02);
+  }
+
+  .modal-content {
+    width: 95%;
+    max-height: 85%;
+  }
 }
 
 </style>
+
 </head>
 <body><header>
     <h1>✨Todo dia uma foto com ela✨</h1>
@@ -178,7 +214,7 @@ body::before {
     <!-- FOTO 2 -->
     <div class="foto-card">
         <img src="fotos/foto2.jpg" alt="Foto 2">
-        <p>Mensagem personalizada da foto 2</p>
+        <p>😐😐😐</p>
         <p>11/12/2025</p>
         <span class="like">❤️</span>
     </div>
@@ -186,7 +222,7 @@ body::before {
     <!-- FOTO 3 -->
     <div class="foto-card">
         <img src="fotos/foto3.jpg" alt="Foto 3">
-        <p>Mensagem personalizada da foto 3</p>
+        <p>primeiro dia</p>
         <p>10/12/2025</p>
         <span class="like">❤️</span>
     </div>
@@ -209,34 +245,6 @@ body::before {
     <p id="modal-text"></p>
   </div>
 </div>
-
-<script>
-  // CURTIR
-  document.querySelectorAll('.like').forEach(like => {
-    like.addEventListener('click', e => {
-      e.stopPropagation();
-      like.classList.toggle('active');
-    });
-  });
-
-  // MODAL (já existente)
-  const cards = document.querySelectorAll('.foto-card');
-  const modal = document.getElementById('modal');
-  const modalImg = document.getElementById('modal-img');
-  const modalText = document.getElementById('modal-text');
-
-  cards.forEach(card => {
-    card.addEventListener('click', () => {
-      modal.classList.add('active');
-      modalImg.src = card.querySelector('img').src;
-      modalText.innerHTML = card.innerHTML.replace(/<img[^>]*>/, '');
-    });
-  });
-
-  modal.addEventListener('click', () => {
-    modal.classList.remove('active');
-  });
-</script>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -302,5 +310,4 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 </body>
-
 </html>
