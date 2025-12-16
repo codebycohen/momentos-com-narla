@@ -258,6 +258,17 @@ body::before {
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+/* ordena por data automatica mente */
+    const galeria = document.querySelector('.galeria');
+let cardsArray = Array.from(document.querySelectorAll('.foto-card'));
+
+cardsArray.sort((a, b) => {
+  const dataA = a.querySelectorAll('p')[1].innerText.split('/').reverse().join('-');
+  const dataB = b.querySelectorAll('p')[1].innerText.split('/').reverse().join('-');
+  return new Date(dataB) - new Date(dataA); // mais recente primeiro
+});
+
+cardsArray.forEach(card => galeria.appendChild(card));
 
   const cards = document.querySelectorAll('.foto-card');
   const modal = document.getElementById('modal');
@@ -321,5 +332,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </body>
 </html>
+
 
 
